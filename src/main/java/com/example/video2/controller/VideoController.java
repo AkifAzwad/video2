@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/videos")
+@RequestMapping("/videos")
 @RequiredArgsConstructor
 @Validated
 public class VideoController {

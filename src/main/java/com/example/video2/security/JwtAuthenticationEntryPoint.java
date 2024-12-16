@@ -8,7 +8,6 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Collections;
 
 import static jakarta.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;

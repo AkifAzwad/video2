@@ -35,7 +35,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -48,11 +47,12 @@ public class SecurityConfig {
                                         "/swagger-ui/**",
                                         "/swagger-ui.html")
                                 .permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/videos").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.GET, "/videos").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
                                 .anyRequest().hasAuthority(Role.ADMIN.name())
                 )
                 .exceptionHandling(exception -> exception.defaultAuthenticationEntryPointFor(point,
                         new AntPathRequestMatcher("/login")))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
@@ -67,13 +67,14 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("*")); // Adjust this as necessary
+        configuration.setAllowedOrigins(List.of("*"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
