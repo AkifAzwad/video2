@@ -2,9 +2,13 @@ package com.example.video2.service.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class VideoMetaDataDTO {
     @NotNull(message = "Title cannot be null")
     @Size(min = 3, max = 100, message = "Title must be between 3 and 100 characters")

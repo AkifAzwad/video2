@@ -32,7 +32,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                         ? authException.getCause().getMessage()
                         : authException.getMessage();
         byte[] body = objectMapper.writeValueAsBytes(Collections.singletonMap("error", message));
-        //some refactoring might be needed here
         response.getOutputStream().write(body);
     }
 }

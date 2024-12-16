@@ -16,7 +16,6 @@ public class ActivityLogController {
 
     private final ActivityLogService activityLogService;
 
-    // Endpoint for admin to view all activity logs
     @GetMapping("/activity-log")
     public ResponseEntity<List<ActivityLog>> getAllActivityLogs() {
         List<ActivityLog> logs = activityLogService.getAllActivityLogs();
